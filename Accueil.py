@@ -10,8 +10,8 @@ from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import precision_score, recall_score
-from sklearn.metrics import ConfusionMatrixDisplay
-from sklearn.metrics import plot_confusion_matrix, plot_roc_curve, plot_precision_recall_curve
+#from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
+#from sklearn.metrics import plot_confusion_matrix, plot_roc_curve, plot_precision_recall_curve
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
@@ -90,42 +90,6 @@ if chart_select == 'Boxplot':
 
 st.write('----')
 
-# Evaluation
-plot_perf = st.sidebar.multiselect(
-    "Choisir un critère d'évaluation",
-    ["Confusion matrix", "ROC Curve", "Precision-Recall Curve"]
-)
-
-def perf(all_plot):
-    if "Confusion matrix" in all_plot:
-        st.subheader("Matrice de Confusion")
-        plot_confusion_matrix(
-            model,
-            X_test_scaled_df,
-            y_test
-        )
-        st.pyplot()
-
-    if "ROC Curve" in all_plot:
-        st.subheader("Courbe ROC")
-        plot_roc_curve(
-            model,
-            X_test_scaled_df,
-            y_test
-        )
-        st.pyplot()
-
-    if "Precision-Recall Curve" in all_plot:
-        st.subheader("Courbe recall")
-        plot_precision_recall_curve(
-            model,
-            X_test_scaled_df,
-            y_test
-        )
-        st.pyplot()
-
-st.write('----')
-
 # Modélisation
 classifier = st.sidebar.selectbox(
     "Classificateur",
@@ -181,8 +145,6 @@ if classifier == "Random Forest":
         st.write(f"Recall Score : {recall:.3f}%")
         st.write(f"F1 - Score : {F1:.3f}%")
 
-        # Afficher les performances
-        perf(plot_perf)
 
 
 # SVM
@@ -234,8 +196,6 @@ if classifier == "SVM":
         st.write(f"Recall Score : {recall:.3f}%")
         st.write(f"F1 - Score : {F1:.3f}%")
 
-        # Afficher les performances
-        perf(plot_perf)
 
 
 
@@ -288,5 +248,4 @@ if classifier == "Regression Logistique":
         st.write(f"Recall Score : {recall:.3f}%")
         st.write(f"F1 - Score : {F1:.3f}%")
 
-        # Afficher les performances
-        perf(plot_perf)
+ 
